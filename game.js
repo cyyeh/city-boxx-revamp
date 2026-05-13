@@ -9,8 +9,15 @@
 'use strict';
 
 // ---------- Tunables ----------
-const LOGICAL_W = 960;
-const LOGICAL_H = 600;
+// Logical canvas dimensions — defaults to the landscape 960×600 world.
+// Portrait phones in 1P mode get reassigned to a 540×960 world in
+// `applyLogicalSize` so the playfield fills the screen.
+let LOGICAL_W = 960;
+let LOGICAL_H = 600;
+const LANDSCAPE_W = 960;
+const LANDSCAPE_H = 600;
+const PORTRAIT_W = 540;
+const PORTRAIT_H = 960;
 
 const BLOCK_W = 48;
 const BLOCK_H = 48;
@@ -55,9 +62,26 @@ const screens = {
 };
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
-canvas.width = LOGICAL_W;
-canvas.height = LOGICAL_H;
+applyLogicalSize(LOGICAL_W, LOGICAL_H);
 ctx.imageSmoothingEnabled = false;
+
+function applyLogicalSize(w, h) {
+  LOGICAL_W = w;
+  LOGICAL_H = h;
+  canvas.width = w;
+  canvas.height = h;
+  canvas.style.aspectRatio = `${w} / ${h}`;
+  ctx.imageSmoothingEnabled = false;
+}
+
+function pickLogicalSize(mode) {
+  // 2P requires a keyboard, so it's effectively desktop — keep landscape.
+  if (mode === '2p') return { w: LANDSCAPE_W, h: LANDSCAPE_H };
+  const portrait = window.innerHeight > window.innerWidth;
+  return portrait
+    ? { w: PORTRAIT_W, h: PORTRAIT_H }
+    : { w: LANDSCAPE_W, h: LANDSCAPE_H };
+}
 
 const hud = {
   p1Floors: document.getElementById('hud-p1-floors'),
@@ -686,6 +710,11 @@ function startGame(mode) {
   if (mode === '2p' && isTouchOnly) mode = '1p';
   game.mode = mode;
   game.fields = [];
+  // Resize the canvas to a portrait world for 1P on portrait phones,
+  // landscape otherwise. Must run before Field construction so each
+  // field captures the right dimensions.
+  const size = pickLogicalSize(mode);
+  applyLogicalSize(size.w, size.h);
   const hudEl = document.querySelector('.hud');
   if (mode === '1p') {
     game.fields.push(new Field(0, LOGICAL_W));

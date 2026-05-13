@@ -258,14 +258,14 @@ kbd {
 
 #game {
   display: block;
-  width: 100%;
-  max-width: 980px;
+  /* The canvas's intrinsic aspect ratio comes from its width/height attributes
+     (set dynamically in game.js — 960×600 on landscape, 540×960 on portrait
+     phones). We just bound it by viewport width and height; intrinsic sizing
+     scales it down preserving aspect ratio. */
+  width: auto;
   height: auto;
-  /* Cap by viewport height too, accounting for HUD and padding,
-     so the canvas always fits on landscape phones without scrolling. */
+  max-width: min(100%, 980px);
   max-height: calc(100dvh - 120px);
-  aspect-ratio: 960 / 600;
-  object-fit: contain;
   background: #0a0e2a;
   border: 4px solid #4a76d4;
   box-shadow: 0 0 0 4px #0a0e2a, 0 0 0 8px #1a3a8a;
