@@ -352,8 +352,10 @@ body.touch-only .controls-hint p[data-i18n-html="ctrl2p"] {
 }
 
 /* ===========================================================
- * Chinese — pixel-font fallback renders CJK too small/thin.
- * Use a CJK-friendly stack and bump sizes ~35-50%.
+ * Chinese — pixel-font fallback renders CJK too small/thin, so we
+ * switch to a CJK-friendly stack. Component sizes (padding,
+ * min-height, etc.) MUST match the English layout exactly — only
+ * font-size gets a small bump for readability, never the box.
  * =========================================================== */
 html[lang^="zh"] body {
   font-family:
@@ -370,19 +372,24 @@ html[lang^="zh"] {
   image-rendering: auto;
 }
 
-html[lang^="zh"] .subtitle      { font-size: clamp(14px, 2.2vw, 20px); letter-spacing: 4px; }
-html[lang^="zh"] .menu-card .prompt { font-size: 18px; letter-spacing: 4px; }
-html[lang^="zh"] .btn           { font-size: 20px; letter-spacing: 4px; padding: 16px 26px; }
-html[lang^="zh"] .controls-hint { font-size: 15px; line-height: 2.1; }
-html[lang^="zh"] kbd            { font-size: 13px; padding: 5px 10px; }
-html[lang^="zh"] .hud           { font-size: 14px; letter-spacing: 2px; }
-html[lang^="zh"] .mini-btn      { font-size: 13px; padding: 10px 14px; letter-spacing: 2px; }
-html[lang^="zh"] .lang-btn      { font-size: 13px; padding: 9px 12px; }
-html[lang^="zh"] #end-title     { font-size: 28px; letter-spacing: 4px; }
-html[lang^="zh"] .end-detail    { font-size: 15px; line-height: 2.2; }
+/* Font-size only — no padding, no letter-spacing changes — so buttons,
+   the menu card, the HUD and the lang switch all keep their EN dimensions. */
+html[lang^="zh"] .subtitle          { font-size: clamp(11px, 1.8vw, 15px); }
+html[lang^="zh"] .menu-card .prompt { font-size: 13px; }
+html[lang^="zh"] .btn               { font-size: 15px; }
+html[lang^="zh"] .controls-hint     { font-size: 12px; line-height: 1.95; }
+html[lang^="zh"] kbd                { font-size: 11px; }
+html[lang^="zh"] .hud               { font-size: 11px; }
+html[lang^="zh"] .mini-btn          { font-size: 10px; }
+html[lang^="zh"] .lang-btn          { font-size: 11px; }
+html[lang^="zh"] #end-title         { font-size: 23px; }
+html[lang^="zh"] .end-detail        { font-size: 12px; line-height: 2.0; }
 
 @media (max-width: 640px) {
-  html[lang^="zh"] .btn        { font-size: 17px; }
-  html[lang^="zh"] .hud        { font-size: 12px; }
-  html[lang^="zh"] .controls-hint { font-size: 13px; }
+  html[lang^="zh"] .btn           { font-size: 13px; }
+  html[lang^="zh"] .hud           { font-size: 9px; }
+  html[lang^="zh"] .controls-hint { font-size: 11px; }
+  html[lang^="zh"] .mini-btn      { font-size: 9px; }
+  html[lang^="zh"] .lang-btn      { font-size: 10px; }
+  html[lang^="zh"] .menu-card .prompt { font-size: 11px; }
 }
