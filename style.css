@@ -58,11 +58,19 @@ body::before {
   height: 100%;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  /* `safe center` falls back to flex-start when content overflows,
+     so taps to the menu buttons stay reachable on short viewports. */
+  justify-content: safe center;
   gap: clamp(12px, 3vh, 24px);
   padding: clamp(12px, 3vw, 24px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 .screen.active { display: flex; }
+
+/* The game screen itself never scrolls — the canvas always fits. */
+#screen-game { overflow: hidden; }
 
 /* ===== Language switcher (top-right corner) ===== */
 .lang-switch {
@@ -97,6 +105,9 @@ body::before {
 /* ===== Title screen ===== */
 .title-wrap {
   text-align: center;
+  /* Reserve space for the fixed-position lang switch in the top-right corner
+     so the title never slips behind it on narrow phones. */
+  max-width: calc(100% - 24px);
 }
 .title {
   font-size: clamp(36px, 8vw, 72px);
@@ -192,10 +203,13 @@ kbd {
 
 /* ===== Game screen ===== */
 #screen-game {
+  /* HUD pinned to top, canvas centered in the remaining space so portrait
+     phones don't show a big empty band beneath the canvas. */
   justify-content: flex-start;
   gap: clamp(6px, 1.5vh, 12px);
   padding: clamp(6px, 1.5vw, 24px);
 }
+#screen-game #game { margin: auto 0; }
 
 .hud {
   width: 100%;
@@ -280,7 +294,10 @@ kbd {
  * Small-screen tuning — phones in either orientation.
  * =========================================================== */
 @media (max-width: 640px) {
-  .title { font-size: 32px; letter-spacing: 3px; }
+  /* Push content below the fixed lang switch so taps land cleanly. */
+  #screen-menu { padding-top: clamp(54px, 12vh, 72px); }
+
+  .title { font-size: 28px; letter-spacing: 3px; }
   .title { text-shadow: 3px 3px 0 #d6391a, 6px 6px 0 #2a1410; }
   .title span { text-shadow: 3px 3px 0 #6b1010, 6px 6px 0 #2a1410; }
   .subtitle { margin-top: 8px; }
