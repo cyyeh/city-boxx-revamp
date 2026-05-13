@@ -29,7 +29,7 @@ In **2P mode** the screen splits — **P1 plays the right half, P2 plays the lef
 
 **Touch devices**: 2P needs a physical keyboard, so the 2P button and hint are auto-hidden on phones and tablets (detected via `(pointer: coarse)` / `(hover: none)`). Even if forced, the game falls back to 1P.
 
-**Portrait phones**: 1P on a portrait viewport runs in a 540×960 logical world (vs. 960×600 in landscape) so the canvas fills the screen and the tower gets more vertical room before the camera scrolls. The swing arc is naturally narrower; everything else (block size, scoring tolerances, tilt threshold) is identical.
+**1P playfield is always portrait (540×960)**, regardless of viewport — the tower is naturally vertical, so portrait fits both phones and desktop. **2P stays landscape (960×600)** so both halves of the split screen are usable. The swing arc is narrower in portrait; everything else (block size, scoring tolerances, tilt threshold) is identical between the two layouts.
 
 Press `Esc` to return to the menu.
 
@@ -46,7 +46,7 @@ Full **English / 繁體中文** support, with the toggle in the top-right corner
 The site is built mobile-first:
 
 - `100dvh` layout + iOS safe-area insets — works on notched iPhones.
-- **Adaptive logical world**: 1P on a portrait phone gets a 540×960 logical canvas; landscape and 2P stay on 960×600. `game.js` rewrites `canvas.width/height` and the inline `aspect-ratio` at game start so the playfield fills the screen in either orientation — no physical rotation required.
+- **Adaptive logical world**: 1P uses a 540×960 portrait canvas everywhere (phone, tablet, desktop); 2P uses 960×600 landscape. `game.js` rewrites `canvas.width/height` and the inline `aspect-ratio` at game start so the playfield fills the available space without distortion.
 - Canvas uses intrinsic sizing (`max-width: min(100%, 980px)` + `max-height: calc(100dvh - 120px)`), so it scales to whatever aspect the engine chose without distortion.
 - Menu uses `justify-content: safe center` + `overflow-y: auto` so every button stays reachable on short viewports (especially 繁中, where fonts are 35–50 % larger).
 - `touch-action: manipulation` and pinch-zoom disabled inside the game; `touch-action: none` on the canvas so taps drop blocks cleanly.
@@ -114,8 +114,8 @@ Most gameplay knobs live at the top of `game.js`:
 | Constant | Effect |
 | --- | --- |
 | `BLOCK_W` / `BLOCK_H` | Block size in world pixels (default 48 × 48) |
-| `LANDSCAPE_W` / `LANDSCAPE_H` | Landscape logical world (960 × 600). Used for 1P landscape and all 2P. |
-| `PORTRAIT_W` / `PORTRAIT_H` | Portrait logical world (540 × 960). Auto-selected for 1P on portrait viewports. |
+| `LANDSCAPE_W` / `LANDSCAPE_H` | Landscape logical world (960 × 600). Used by 2P only. |
+| `PORTRAIT_W` / `PORTRAIT_H` | Portrait logical world (540 × 960). Used by 1P everywhere. |
 | `PERFECT_TOLERANCE` / `GOOD_TOLERANCE` | Score-tier thresholds in pixels (4 / 14) |
 | `PERFECT_BONUS` / `GOOD_POINTS` / `MARGINAL_POINTS` / `FIRST_BLOCK_POINTS` | Point values per tier (500 / 200 / 50 / 200) |
 | `MIN_OVERLAP` | Below this, the block slides off entirely |

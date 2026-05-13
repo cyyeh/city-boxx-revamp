@@ -75,12 +75,12 @@ function applyLogicalSize(w, h) {
 }
 
 function pickLogicalSize(mode) {
-  // 2P requires a keyboard, so it's effectively desktop — keep landscape.
+  // 2P keeps the wide landscape playfield so both halves are usable.
+  // 1P always uses the portrait playfield (height > width) regardless of
+  // viewport — the tower is naturally vertical, so this fits better on
+  // both phones and desktop.
   if (mode === '2p') return { w: LANDSCAPE_W, h: LANDSCAPE_H };
-  const portrait = window.innerHeight > window.innerWidth;
-  return portrait
-    ? { w: PORTRAIT_W, h: PORTRAIT_H }
-    : { w: LANDSCAPE_W, h: LANDSCAPE_H };
+  return { w: PORTRAIT_W, h: PORTRAIT_H };
 }
 
 const hud = {
