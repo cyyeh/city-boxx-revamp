@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+<meta name="theme-color" content="#0a0e2a" />
+<meta name="color-scheme" content="dark" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="City Bloxx" />
+<meta name="mobile-web-app-capable" content="yes" />
+<title>City Bloxx Revamp</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%230b1020'/%3E%3Crect x='14' y='40' width='36' height='12' fill='%23ff5470'/%3E%3Crect x='18' y='28' width='28' height='12' fill='%2300d4ff'/%3E%3Crect x='22' y='16' width='20' height='12' fill='%23ffd93d'/%3E%3C/svg%3E" />
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='28' fill='%230b1020'/%3E%3Crect x='38' y='110' width='104' height='32' fill='%23ff5470'/%3E%3Crect x='50' y='76' width='80' height='32' fill='%2300d4ff'/%3E%3Crect x='62' y='42' width='56' height='32' fill='%23ffd93d'/%3E%3C/svg%3E" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="lang-switch" id="lang-switch">
+    <button class="lang-btn" data-lang="en">EN</button>
+    <button class="lang-btn" data-lang="zh">繁中</button>
+  </div>
+
+  <div id="rotate-hint" class="rotate-hint" aria-hidden="true">
+    <div class="rotate-icon" aria-hidden="true">
+      <svg viewBox="0 0 64 64" width="72" height="72">
+        <rect x="14" y="4" width="36" height="56" rx="6" fill="none" stroke="#ffd23f" stroke-width="3"/>
+        <rect x="14" y="12" width="36" height="40" fill="#14245a"/>
+        <circle cx="32" cy="56" r="2.5" fill="#ffd23f"/>
+        <path d="M30 28 L48 28 L44 24 M48 28 L44 32" fill="none" stroke="#ff5757" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <p data-i18n="rotateHint">Rotate your device to landscape for the best experience</p>
+  </div>
+
+  <div id="screen-menu" class="screen active">
+    <div class="title-wrap">
+      <h1 class="title">CITY <span>BLOXX</span></h1>
+      <p class="subtitle" data-i18n="subtitle">REVAMPED EDITION</p>
+    </div>
+
+    <div class="menu-card">
+      <p class="prompt" data-i18n="selectMode">SELECT MODE</p>
+      <button class="btn" data-mode="1p" data-i18n="onePlayer">1 PLAYER</button>
+      <button class="btn" data-mode="2p" data-i18n="twoPlayers">2 PLAYERS</button>
+    </div>
+
+    <div class="controls-hint">
+      <p data-i18n-html="ctrl1p"><b>1P:</b> press <kbd>↓</kbd> to drop the block</p>
+      <p data-i18n-html="ctrl2p"><b>2P:</b> P1 = <kbd>↓</kbd> &nbsp; P2 = <kbd>S</kbd></p>
+      <p class="goal" data-i18n-html="goal">Stack <b>15</b> floors. Misaligned blocks lose mass. Lose all width and the tower topples.</p>
+    </div>
+  </div>
+
+  <div id="screen-game" class="screen">
+    <div class="hud">
+      <div class="hud-left">
+        <span id="hud-p1-label" data-i18n="player1">PLAYER 1</span>
+        <span class="floors"><span data-i18n="floors">FLOORS</span> <b id="hud-p1-floors">0</b></span>
+        <span class="score"><span data-i18n="score">SCORE</span> <b id="hud-p1-score">0</b></span>
+      </div>
+      <button id="btn-back" class="mini-btn" data-i18n="menu">MENU</button>
+      <div class="hud-right hidden" id="hud-p2-wrap">
+        <span id="hud-p2-label" data-i18n="player2">PLAYER 2</span>
+        <span class="floors"><span data-i18n="floors">FLOORS</span> <b id="hud-p2-floors">0</b></span>
+        <span class="score"><span data-i18n="score">SCORE</span> <b id="hud-p2-score">0</b></span>
+      </div>
+    </div>
+    <canvas id="game"></canvas>
+  </div>
+
+  <div id="screen-end" class="screen">
+    <div class="menu-card">
+      <h2 id="end-title">GAME OVER</h2>
+      <p id="end-detail" class="end-detail"></p>
+      <button class="btn" id="btn-again" data-i18n="playAgain">PLAY AGAIN</button>
+      <button class="btn" id="btn-menu" data-i18n="mainMenu">MAIN MENU</button>
+    </div>
+  </div>
+
+  <script src="i18n.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

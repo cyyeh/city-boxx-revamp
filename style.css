@@ -1,0 +1,408 @@
+/* ---- City Bloxx Revamp — retro pixel UI ---- */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100vh;
+  height: 100dvh;
+  width: 100%;
+  font-family: 'Press Start 2P', monospace;
+  background: #0a0e2a;
+  color: #fff;
+  overflow: hidden;
+  image-rendering: pixelated;
+  -webkit-font-smoothing: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  touch-action: manipulation;
+  overscroll-behavior: none;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(ellipse at top, #1a2870 0%, #0a0e2a 60%, #050717 100%);
+  background-attachment: fixed;
+  user-select: none;
+  -webkit-user-select: none;
+  padding:
+    env(safe-area-inset-top)
+    env(safe-area-inset-right)
+    env(safe-area-inset-bottom)
+    env(safe-area-inset-left);
+}
+
+/* faint star field */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(2px 2px at 20% 30%, #fff 99%, transparent),
+    radial-gradient(1px 1px at 80% 20%, #fff 99%, transparent),
+    radial-gradient(1px 1px at 35% 80%, #fff 99%, transparent),
+    radial-gradient(2px 2px at 65% 65%, #ffe27a 99%, transparent),
+    radial-gradient(1px 1px at 90% 50%, #fff 99%, transparent),
+    radial-gradient(1px 1px at 10% 60%, #fff 99%, transparent);
+  background-size: 100% 100%;
+  opacity: 0.6;
+}
+
+.screen {
+  display: none;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(12px, 3vh, 24px);
+  padding: clamp(12px, 3vw, 24px);
+}
+.screen.active { display: flex; }
+
+/* ===== Language switcher (top-right corner) ===== */
+.lang-switch {
+  position: fixed;
+  top: calc(14px + env(safe-area-inset-top));
+  right: calc(14px + env(safe-area-inset-right));
+  display: flex;
+  gap: 4px;
+  z-index: 10;
+}
+.lang-btn {
+  font-family: inherit;
+  font-size: 10px;
+  letter-spacing: 1px;
+  padding: 10px 12px;
+  background: #14245a;
+  color: #b8c7ff;
+  border: 2px solid #4a76d4;
+  cursor: pointer;
+  box-shadow: 0 3px 0 #0a0e2a;
+  min-width: 44px;
+  min-height: 44px;
+}
+.lang-btn:hover { background: #1a3a8a; color: #fff; }
+.lang-btn.active {
+  background: #ffd23f;
+  color: #2a1410;
+  border-color: #d6a015;
+  box-shadow: 0 3px 0 #b88a1a;
+}
+
+/* ===== Title screen ===== */
+.title-wrap {
+  text-align: center;
+}
+.title {
+  font-size: clamp(36px, 8vw, 72px);
+  letter-spacing: 4px;
+  color: #ffd23f;
+  text-shadow:
+    4px 4px 0 #d6391a,
+    8px 8px 0 #2a1410;
+}
+.title span {
+  color: #ff5757;
+  text-shadow:
+    4px 4px 0 #6b1010,
+    8px 8px 0 #2a1410;
+}
+.subtitle {
+  margin-top: 14px;
+  font-size: clamp(10px, 1.6vw, 14px);
+  color: #8fd5ff;
+  letter-spacing: 2px;
+}
+
+.menu-card {
+  background: #14245a;
+  border: 4px solid #4a76d4;
+  box-shadow:
+    0 0 0 4px #0a0e2a,
+    0 0 0 8px #4a76d4,
+    8px 8px 0 #0a0e2a;
+  padding: clamp(18px, 4vw, 28px) clamp(20px, 5vw, 36px);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: min(420px, calc(100% - 24px));
+  align-items: center;
+}
+.menu-card .prompt {
+  font-size: 12px;
+  color: #ffd23f;
+  letter-spacing: 2px;
+  margin-bottom: 6px;
+}
+
+.btn {
+  font-family: inherit;
+  font-size: 14px;
+  letter-spacing: 2px;
+  padding: 14px 22px;
+  background: #ffd23f;
+  color: #2a1410;
+  border: none;
+  cursor: pointer;
+  box-shadow:
+    0 4px 0 #b88a1a,
+    0 4px 0 4px #2a1410;
+  transition: transform 80ms, box-shadow 80ms;
+  min-width: min(220px, 100%);
+  min-height: 48px;
+  width: 100%;
+  max-width: 280px;
+}
+.btn:hover {
+  background: #ffe27a;
+}
+.btn:active {
+  transform: translateY(4px);
+  box-shadow:
+    0 0 0 #b88a1a,
+    0 0 0 4px #2a1410;
+}
+
+.controls-hint {
+  text-align: center;
+  font-size: 11px;
+  line-height: 1.9;
+  color: #b8c7ff;
+  max-width: 640px;
+}
+.controls-hint .goal {
+  margin-top: 12px;
+  color: #8fd5ff;
+}
+kbd {
+  display: inline-block;
+  padding: 4px 8px;
+  background: #14245a;
+  border: 2px solid #4a76d4;
+  border-bottom-width: 4px;
+  color: #ffd23f;
+  font-size: 10px;
+  margin: 0 2px;
+}
+
+/* ===== Game screen ===== */
+#screen-game {
+  justify-content: flex-start;
+  gap: clamp(6px, 1.5vh, 12px);
+  padding: clamp(6px, 1.5vw, 24px);
+}
+
+.hud {
+  width: 100%;
+  max-width: 980px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 10px;
+  letter-spacing: 1px;
+  padding: 10px 14px;
+  background: #14245a;
+  border: 3px solid #4a76d4;
+  flex-wrap: nowrap;
+}
+.hud-left, .hud-right {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+.hud-right { text-align: right; }
+
+/* In 2P, P1 plays on the right field and P2 on the left, so flip the HUD
+   sections to match the playfield they belong to. */
+.hud.mode-2p .hud-left  { order: 3; text-align: right; }
+.hud.mode-2p #btn-back  { order: 2; }
+.hud.mode-2p .hud-right { order: 1; text-align: left; }
+.hud .floors b, .hud .score b { color: #ffd23f; }
+#hud-p1-label { color: #ff5757; }
+#hud-p2-label { color: #57c8ff; }
+.hidden { visibility: hidden; }
+
+.mini-btn {
+  font-family: inherit;
+  font-size: 9px;
+  letter-spacing: 1px;
+  padding: 8px 12px;
+  background: #4a76d4;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 3px 0 #1a3a8a;
+}
+.mini-btn:hover { background: #6a96f4; }
+
+#game {
+  display: block;
+  width: 100%;
+  max-width: 980px;
+  height: auto;
+  /* Cap by viewport height too, accounting for HUD and padding,
+     so the canvas always fits on landscape phones without scrolling. */
+  max-height: calc(100dvh - 120px);
+  aspect-ratio: 960 / 600;
+  object-fit: contain;
+  background: #0a0e2a;
+  border: 4px solid #4a76d4;
+  box-shadow: 0 0 0 4px #0a0e2a, 0 0 0 8px #1a3a8a;
+  image-rendering: pixelated;
+  touch-action: none;        /* prevents scroll/zoom on canvas taps */
+}
+
+/* ===== End screen ===== */
+#screen-end .menu-card { padding: 36px 48px; }
+#end-title {
+  color: #ffd23f;
+  font-size: 22px;
+  letter-spacing: 3px;
+  margin-bottom: 8px;
+}
+.end-detail {
+  font-size: 11px;
+  line-height: 2;
+  color: #b8c7ff;
+  text-align: center;
+  margin-bottom: 12px;
+  white-space: pre-line;
+}
+
+/* ===========================================================
+ * Small-screen tuning — phones in either orientation.
+ * =========================================================== */
+@media (max-width: 640px) {
+  .title { font-size: 32px; letter-spacing: 3px; }
+  .title { text-shadow: 3px 3px 0 #d6391a, 6px 6px 0 #2a1410; }
+  .title span { text-shadow: 3px 3px 0 #6b1010, 6px 6px 0 #2a1410; }
+  .subtitle { margin-top: 8px; }
+
+  .btn { font-size: 12px; padding: 12px 18px; min-height: 48px; }
+  .menu-card .prompt { font-size: 10px; }
+
+  .controls-hint { font-size: 10px; line-height: 1.85; }
+  kbd { font-size: 9px; padding: 3px 6px; }
+
+  .hud { font-size: 8px; padding: 8px 10px; gap: 6px; }
+  .hud-left, .hud-right { gap: 4px; }
+  .mini-btn { font-size: 8px; padding: 8px 10px; min-height: 36px; }
+
+  #end-title { font-size: 18px; letter-spacing: 2px; }
+  .end-detail { font-size: 10px; line-height: 1.9; }
+
+  .lang-switch { gap: 3px; }
+  .lang-btn { font-size: 9px; padding: 8px 9px; min-width: 38px; min-height: 38px; }
+}
+
+/* Very narrow / portrait phones — tighten further. */
+@media (max-width: 380px) {
+  .title { font-size: 26px; letter-spacing: 2px; }
+  .btn { font-size: 11px; padding: 10px 14px; }
+  .hud { font-size: 7px; padding: 6px 8px; }
+  .menu-card { padding: 14px 16px; }
+}
+
+/* Landscape phones — tower needs maximum vertical room. */
+@media (max-height: 480px) and (orientation: landscape) {
+  #screen-game { padding: 4px; gap: 4px; }
+  .hud { padding: 6px 10px; font-size: 8px; }
+  #game { max-height: calc(100dvh - 70px); }
+  .lang-switch { top: calc(6px + env(safe-area-inset-top)); }
+}
+
+/* ===========================================================
+ * Rotate-to-landscape hint — only on small portrait phones.
+ * =========================================================== */
+.rotate-hint { display: none; }
+
+@media (orientation: portrait) and (max-width: 600px) {
+  .rotate-hint {
+    display: flex;
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    padding: 32px;
+    background: rgba(10, 14, 42, 0.96);
+    color: #ffd23f;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.9;
+    letter-spacing: 2px;
+  }
+  .rotate-hint .rotate-icon {
+    animation: rotate-pulse 1.8s ease-in-out infinite;
+  }
+  @keyframes rotate-pulse {
+    0%, 100% { transform: rotate(-8deg); }
+    50%      { transform: rotate(8deg); }
+  }
+  /* Hide everything else under the overlay so users can't fight with it. */
+  .screen.active { filter: blur(2px); pointer-events: none; }
+  .lang-switch { display: none; }
+}
+
+html[lang^="zh"] .rotate-hint { font-size: 15px; line-height: 2.2; }
+
+.hint-note { color: #8fa5d8; opacity: 0.8; }
+
+/* ===========================================================
+ * Touch devices: 2P needs a keyboard, so hide the option.
+ * `pointer: coarse` covers phones and tablets without a mouse.
+ * The .touch-only class is set by JS as a defensive fallback.
+ * =========================================================== */
+@media (pointer: coarse), (hover: none) {
+  .btn[data-mode="2p"] { display: none; }
+  .controls-hint p[data-i18n-html="ctrl2p"] { display: none; }
+}
+body.touch-only .btn[data-mode="2p"],
+body.touch-only .controls-hint p[data-i18n-html="ctrl2p"] {
+  display: none;
+}
+
+/* ===========================================================
+ * Chinese — pixel-font fallback renders CJK too small/thin.
+ * Use a CJK-friendly stack and bump sizes ~35-50%.
+ * =========================================================== */
+html[lang^="zh"] body {
+  font-family:
+    'Press Start 2P',
+    'Microsoft JhengHei',
+    'PingFang TC',
+    'Heiti TC',
+    'Noto Sans TC',
+    'Noto Sans CJK TC',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+html[lang^="zh"] {
+  image-rendering: auto;
+}
+
+html[lang^="zh"] .subtitle      { font-size: clamp(14px, 2.2vw, 20px); letter-spacing: 4px; }
+html[lang^="zh"] .menu-card .prompt { font-size: 18px; letter-spacing: 4px; }
+html[lang^="zh"] .btn           { font-size: 20px; letter-spacing: 4px; padding: 16px 26px; }
+html[lang^="zh"] .controls-hint { font-size: 15px; line-height: 2.1; }
+html[lang^="zh"] kbd            { font-size: 13px; padding: 5px 10px; }
+html[lang^="zh"] .hud           { font-size: 14px; letter-spacing: 2px; }
+html[lang^="zh"] .mini-btn      { font-size: 13px; padding: 10px 14px; letter-spacing: 2px; }
+html[lang^="zh"] .lang-btn      { font-size: 13px; padding: 9px 12px; }
+html[lang^="zh"] #end-title     { font-size: 28px; letter-spacing: 4px; }
+html[lang^="zh"] .end-detail    { font-size: 15px; line-height: 2.2; }
+
+@media (max-width: 640px) {
+  html[lang^="zh"] .btn        { font-size: 17px; }
+  html[lang^="zh"] .hud        { font-size: 12px; }
+  html[lang^="zh"] .controls-hint { font-size: 13px; }
+}
