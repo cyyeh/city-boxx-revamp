@@ -599,40 +599,17 @@ class Field {
     if (!this.activeBlock) return;
     const a = this.activeBlock;
     const anchorX = this.w / 2;
-    const anchorY = CRANE_Y;
 
-    // horizontal jib
-    g.fillStyle = '#2a1410';
-    g.fillRect(8, anchorY - 4, this.w - 16, 2);
-    g.fillStyle = '#ffd23f';
-    g.fillRect(8, anchorY - 14, this.w - 16, 10);
-    g.fillStyle = '#d6a015';
-    g.fillRect(8, anchorY - 6, this.w - 16, 2);
-    g.fillStyle = '#2a1410';
-    g.fillRect(6, anchorY - 16, 4, 14);
-    g.fillRect(this.w - 10, anchorY - 16, 4, 14);
-
-    // hook anchor housing
-    g.fillStyle = '#ff5757';
-    g.fillRect(anchorX - 10, anchorY - 14, 20, 8);
-    g.fillStyle = '#a01818';
-    g.fillRect(anchorX - 10, anchorY - 8, 20, 2);
-    g.fillStyle = '#2a1410';
-    g.fillRect(anchorX - 2, anchorY - 6, 4, 4);
-
-    // swinging cable
+    // swinging cable — drops straight from the top of the playfield,
+    // no visible horizontal jib or hook housing.
     const bx = a.x;
     const by = a.screenY;
     g.strokeStyle = '#2a1410';
     g.lineWidth = 2;
     g.beginPath();
-    g.moveTo(anchorX, anchorY - 2);
+    g.moveTo(anchorX, 0);
     g.lineTo(bx, by);
     g.stroke();
-
-    // hook
-    g.fillStyle = '#2a1410';
-    g.fillRect(bx - 4, by - 2, 8, 4);
 
     // hanging or falling block (screen-space)
     this._drawBlock(g, bx, by, a.w);
