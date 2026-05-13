@@ -110,12 +110,16 @@ Most gameplay knobs live at the top of `game.js`:
 
 | Constant | Effect |
 | --- | --- |
-| `BLOCK_W` / `BLOCK_H` | Block size (default 84 × 22) |
-| `PERFECT_TOLERANCE` / `GOOD_TOLERANCE` | Score-tier thresholds in pixels |
-| `MIN_OVERLAP` | Below this, the block slides off |
-| `MAX_TILT_RAD` | Topple threshold (~18°) |
+| `BLOCK_W` / `BLOCK_H` | Block size in world pixels (default 48 × 48) |
+| `LOGICAL_W` / `LOGICAL_H` | Internal canvas resolution (960 × 600) |
+| `PERFECT_TOLERANCE` / `GOOD_TOLERANCE` | Score-tier thresholds in pixels (4 / 14) |
+| `PERFECT_BONUS` / `GOOD_POINTS` / `MARGINAL_POINTS` / `FIRST_BLOCK_POINTS` | Point values per tier (500 / 200 / 50 / 200) |
+| `MIN_OVERLAP` | Below this, the block slides off entirely |
+| `MAX_TILT_RAD` | Topple threshold (~18° / 0.32 rad) |
 | `TILT_TORQUE_K` | Sensitivity of tilt to offsets |
-| `SWING_ANGLE_CAP` | Max swing amplitude (radians) |
-| `PENDULUM_G` | Tunes base swing frequency |
-| `SWING_RAMP_PER_FLOOR` / `SWING_RAMP_MAX` | Endless-mode speed curve |
-| `MIN_CABLE` / `MAX_CABLE` | Cable-length bounds (px) |
+| `SWING_ANGLE_CAP` | Max swing amplitude in radians (~60°) |
+| `PENDULUM_G` | Tunes base swing frequency via `ω = √(g/L)` |
+| `SWING_RAMP_PER_FLOOR` / `SWING_RAMP_MAX` | Endless-mode angular-speed bonus per floor and its ceiling |
+| `MIN_CABLE` / `MAX_CABLE` | Cable-length bounds in pixels (80 / 280) |
+| `TOWER_TOP_TARGET` | Screen-Y at which the camera starts scrolling |
+| `HANG_MARGIN` | Clearance between the hanging block and the tower top |
