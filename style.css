@@ -84,6 +84,7 @@ body::before {
 .lang-btn {
   font-family: inherit;
   font-size: 10px;
+  line-height: 1.2;
   letter-spacing: 1px;
   padding: 10px 12px;
   background: #14245a;
@@ -112,6 +113,7 @@ body::before {
 .title {
   font-size: clamp(36px, 8vw, 72px);
   letter-spacing: 4px;
+  line-height: 1.1;
   color: #ffd23f;
   text-shadow:
     4px 4px 0 #d6391a,
@@ -126,6 +128,7 @@ body::before {
 .subtitle {
   margin-top: 14px;
   font-size: clamp(10px, 1.6vw, 14px);
+  line-height: 1.2;
   color: #8fd5ff;
   letter-spacing: 2px;
 }
@@ -146,6 +149,7 @@ body::before {
 }
 .menu-card .prompt {
   font-size: 12px;
+  line-height: 1.2;
   color: #ffd23f;
   letter-spacing: 2px;
   margin-bottom: 6px;
@@ -154,6 +158,9 @@ body::before {
 .btn {
   font-family: inherit;
   font-size: 14px;
+  /* Fixed line-height so the button height doesn't depend on which font
+     stack (pixel vs CJK) is rendering the label. */
+  line-height: 1.2;
   letter-spacing: 2px;
   padding: 14px 22px;
   background: #ffd23f;
@@ -219,6 +226,9 @@ kbd {
   justify-content: space-between;
   gap: 8px;
   font-size: 10px;
+  /* Fixed line-height so the bar's height is identical across languages
+     regardless of which font (pixel vs CJK) renders the labels. */
+  line-height: 1.4;
   letter-spacing: 1px;
   padding: 10px 14px;
   background: #14245a;
@@ -231,6 +241,7 @@ kbd {
   gap: 6px;
   min-width: 0;
 }
+.hud-left > *, .hud-right > * { line-height: 1.4; }
 .hud-right { text-align: right; }
 
 /* In 2P, P1 plays on the right field and P2 on the left, so flip the HUD
@@ -246,6 +257,7 @@ kbd {
 .mini-btn {
   font-family: inherit;
   font-size: 9px;
+  line-height: 1.2;
   letter-spacing: 1px;
   padding: 8px 12px;
   background: #4a76d4;
@@ -377,19 +389,15 @@ html[lang^="zh"] {
 html[lang^="zh"] .subtitle          { font-size: clamp(11px, 1.8vw, 15px); }
 html[lang^="zh"] .menu-card .prompt { font-size: 13px; }
 html[lang^="zh"] .btn               { font-size: 15px; }
-html[lang^="zh"] .controls-hint     { font-size: 12px; line-height: 1.95; }
+html[lang^="zh"] .controls-hint     { font-size: 12px; }
 html[lang^="zh"] kbd                { font-size: 11px; }
-html[lang^="zh"] .hud               { font-size: 11px; }
-html[lang^="zh"] .mini-btn          { font-size: 10px; }
-html[lang^="zh"] .lang-btn          { font-size: 11px; }
 html[lang^="zh"] #end-title         { font-size: 23px; }
-html[lang^="zh"] .end-detail        { font-size: 12px; line-height: 2.0; }
+html[lang^="zh"] .end-detail        { font-size: 12px; }
+/* .hud, .lang-btn, .mini-btn, .btn, .menu-card .prompt deliberately keep
+   the same font-size as EN — so their box dimensions stay identical.
+   CJK glyphs already render visibly larger than Latin at the same
+   nominal font-size, so no compensation bump is needed. */
 
 @media (max-width: 640px) {
-  html[lang^="zh"] .btn           { font-size: 13px; }
-  html[lang^="zh"] .hud           { font-size: 9px; }
   html[lang^="zh"] .controls-hint { font-size: 11px; }
-  html[lang^="zh"] .mini-btn      { font-size: 9px; }
-  html[lang^="zh"] .lang-btn      { font-size: 10px; }
-  html[lang^="zh"] .menu-card .prompt { font-size: 11px; }
 }
