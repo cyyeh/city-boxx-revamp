@@ -71,9 +71,8 @@ const LANG_KEY = 'cityBloxxLang';
 let current = (() => {
   const saved = localStorage.getItem(LANG_KEY);
   if (saved && STRINGS[saved]) return saved;
-  // detect by browser
-  const nav = (navigator.language || 'en').toLowerCase();
-  return nav.startsWith('zh') ? 'zh' : 'en';
+  // First-visit default: 繁中. Users can switch via the top-right toggle.
+  return 'zh';
 })();
 
 function format(str, vars) {

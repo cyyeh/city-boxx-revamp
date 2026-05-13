@@ -38,7 +38,7 @@ Press `Esc` to return to the menu.
 Full **English / 繁體中文** support, with the toggle in the top-right corner.
 
 - Selection persists across reloads via `localStorage`.
-- First visit auto-detects via `navigator.language` (`zh-*` → 繁中, else EN).
+- First visit defaults to **繁中**. Users can switch to EN via the top-right toggle, and the choice is remembered.
 - When 繁中 is active, the UI switches to a CJK-friendly font stack (`PingFang TC` / `Microsoft JhengHei` / `Noto Sans TC`…) and sizes are bumped 35–50 % so Chinese characters don't look thin or undersized next to the pixel font.
 
 ## Mobile support
