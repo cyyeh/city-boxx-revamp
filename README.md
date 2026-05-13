@@ -48,7 +48,7 @@ The site is built mobile-first:
 - `touch-action: manipulation` and pinch-zoom disabled inside the game; `touch-action: none` on the canvas so taps drop blocks cleanly.
 - 44–48 px minimum touch targets on every button.
 - Adaptive typography via `clamp()`; extra-tight tuning for `≤ 380 px` and landscape phones (`max-height: 480 px`).
-- Portrait phones (`≤ 600 px`) get a soft "rotate to landscape" overlay (animated phone icon, bilingual copy). Landscape iPads/tablets play full-screen normally.
+- Plays in portrait or landscape — canvas scales to fit either way, no rotation required.
 - PWA-ready meta tags (`theme-color`, `apple-mobile-web-app-*`, `apple-touch-icon`).
 
 ## Running locally
@@ -95,7 +95,7 @@ The included `.github/workflows/pages.yml` also enables automatic deploys via th
 
 | File | Purpose |
 | --- | --- |
-| `index.html` | Markup, screens (menu / game / end), rotate-hint overlay, PWA meta tags |
+| `index.html` | Markup, screens (menu / game / end), PWA meta tags |
 | `style.css` | Retro pixel-art UI, responsive layout, safe-area handling, CJK overrides |
 | `game.js` | Canvas engine: pendulum physics, tilt + collapse, scoring, input, camera, particles |
 | `i18n.js` | English / 繁體中文 translation layer with `localStorage` persistence |

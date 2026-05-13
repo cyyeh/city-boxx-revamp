@@ -24,7 +24,6 @@ const STRINGS = {
     menu: 'MENU',
     playAgain: 'PLAY AGAIN',
     mainMenu: 'MAIN MENU',
-    rotateHint: 'Rotate your device to landscape for the best experience',
     // end-screen messages
     youWin: 'YOU WIN!',
     towerCollapsed: 'TOWER COLLAPSED',
@@ -54,7 +53,6 @@ const STRINGS = {
     menu: '選單',
     playAgain: '再玩一次',
     mainMenu: '回主選單',
-    rotateHint: '請將裝置橫向擺放以獲得最佳體驗',
     youWin: '過關！',
     towerCollapsed: '大樓倒了',
     p1Wins: '玩家一獲勝！',
